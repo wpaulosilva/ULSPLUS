@@ -1,0 +1,47 @@
+# ===== Android Studio / Gradle / Kotlin =====
+
+# Gradle
+.gradle/
+**/build/
+gradle-app.setting
+.gradletasknamecache
+
+# Configuração local (caminho do SDK, chaves) - NUNCA enviar
+local.properties
+*.keystore
+*.jks
+keystore.properties
+
+# Android Studio / IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+captures/
+.navigation/
+.externalNativeBuild/
+.cxx/
+
+# Kotlin
+.kotlin/
+*.hprof
+
+# Ficheiros gerados
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+output.json
+output-metadata.json
+
+# Logs
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ficheiros temporários do Office
+~$*
