@@ -1,0 +1,22 @@
+title Adicionar medicamento por código
+participant Utente
+participant "App móvel" as App
+participant Servidor
+participant Infarmed
+Utente->App: ler o código com a câmara
+App->Servidor: pedirMedicamento(código)
+Servidor->Infarmed: consultar(código)
+Infarmed-->Servidor: dados do medicamento
+Servidor->Servidor: comparar com a medicação do utente
+alt substância ativa repetida
+Servidor-->App: aviso de repetição
+App-->Utente: Falar com um profissional ou farmacêutico
+else sem substância repetida
+Servidor-->App: dados do medicamento
+App-->Utente: mostrar o medicamento
+end
+Utente->App: indicar dose e horários e confirmar
+App->Servidor: guardarMedicação(dose, horários)
+Servidor->Servidor: criar a medicação e as tomas
+Servidor-->App: confirmação
+App-->Utente: Medicação adicionada

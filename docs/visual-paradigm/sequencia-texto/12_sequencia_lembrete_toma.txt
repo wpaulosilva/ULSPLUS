@@ -1,0 +1,26 @@
+title Lembrete da toma
+participant Utente
+participant "App móvel" as App
+participant Servidor
+participant "Serv. notificações" as Notif
+participant WhatsApp
+participant Cuidador
+Servidor->Servidor: chega a hora da toma
+Servidor->Notif: enviarLembrete(toma)
+Notif-->App: notificação push
+App-->Utente: mostrar lembrete (voz e ecrã)
+alt Utente toca Tomei
+Utente->App: Tomei
+App->Servidor: confirmarToma()
+Servidor->Servidor: estado = tomada; somar pontos
+else Utente toca Adiar 10 min
+Utente->App: Adiar 10 min
+App->Servidor: adiarToma(10)
+Servidor->Servidor: estado = adiada; repetir o lembrete em 10 min
+else sem resposta em 30 minutos
+Servidor->Servidor: estado = não confirmada
+opt o utente tem cuidador com telemóvel
+Servidor->WhatsApp: enviarMensagem(telemóvel, nome, hora)
+WhatsApp->Cuidador: mensagem de aviso
+end
+end

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="b3_Defs_1" targetNamespace="http://bpmn.io/schema/bpmn">
+<collaboration id="b3_Collab_1">
+<participant id="b3_P1" name="Utente" processRef="b3_Proc1"/>
+<participant id="b3_P2" name="Aplicação" processRef="b3_Proc2"/>
+<messageFlow id="b3_MF1" name="Quiz escolhido" sourceRef="b3_N2" targetRef="b3_N11"/>
+<messageFlow id="b3_MF2" name="Respostas" sourceRef="b3_N3" targetRef="b3_N12"/>
+<messageFlow id="b3_MF3" name="Perguntas e explicações" sourceRef="b3_N12" targetRef="b3_N3"/>
+<messageFlow id="b3_MF4" name="Pontos e resultado" sourceRef="b3_N14" targetRef="b3_N4"/>
+<messageFlow id="b3_MF5" name="Recompensa escolhida" sourceRef="b3_N7" targetRef="b3_N16"/>
+<messageFlow id="b3_MF6" name="Código da recompensa" sourceRef="b3_N17" targetRef="b3_N8"/>
+</collaboration>
+<process id="b3_Proc1" isExecutable="false">
+<startEvent id="b3_N1" name="Quer aprender"><outgoing>SF1</outgoing></startEvent>
+<userTask id="b3_N2" name="Escolher quiz"><incoming>SF1</incoming><outgoing>SF2</outgoing></userTask>
+<subProcess id="b3_N3" name="Responder às perguntas"><incoming>SF2</incoming><outgoing>SF3</outgoing></subProcess>
+<intermediateCatchEvent id="b3_N4" name="Resultado recebido"><incoming>SF3</incoming><outgoing>SF4</outgoing><messageEventDefinition/></intermediateCatchEvent>
+<userTask id="b3_N5" name="Ver pontos e resultado"><incoming>SF4</incoming><outgoing>SF5</outgoing></userTask>
+<exclusiveGateway id="b3_N6" name="Quer trocar pontos?"><incoming>SF5</incoming><outgoing>SF6</outgoing><outgoing>SF9</outgoing></exclusiveGateway>
+<userTask id="b3_N7" name="Escolher recompensa"><incoming>SF6</incoming><outgoing>SF7</outgoing></userTask>
+<intermediateCatchEvent id="b3_N8" name="Código recebido"><incoming>SF7</incoming><outgoing>SF8</outgoing><messageEventDefinition/></intermediateCatchEvent>
+<endEvent id="b3_N9" name="Recompensa obtida"><incoming>SF8</incoming></endEvent>
+<endEvent id="b3_N10" name="Quiz concluído"><incoming>SF9</incoming></endEvent>
+<sequenceFlow id="b3_SF1" name="" sourceRef="b3_N1" targetRef="b3_N2"/>
+<sequenceFlow id="b3_SF2" name="" sourceRef="b3_N2" targetRef="b3_N3"/>
+<sequenceFlow id="b3_SF3" name="" sourceRef="b3_N3" targetRef="b3_N4"/>
+<sequenceFlow id="b3_SF4" name="" sourceRef="b3_N4" targetRef="b3_N5"/>
+<sequenceFlow id="b3_SF5" name="" sourceRef="b3_N5" targetRef="b3_N6"/>
+<sequenceFlow id="b3_SF6" name="Sim" sourceRef="b3_N6" targetRef="b3_N7"/>
+<sequenceFlow id="b3_SF7" name="" sourceRef="b3_N7" targetRef="b3_N8"/>
+<sequenceFlow id="b3_SF8" name="" sourceRef="b3_N8" targetRef="b3_N9"/>
+<sequenceFlow id="b3_SF9" name="Não" sourceRef="b3_N6" targetRef="b3_N10"/>
+</process>
+<process id="b3_Proc2" isExecutable="false">
+<startEvent id="b3_N11" name="Quiz escolhido"><outgoing>SF10</outgoing><messageEventDefinition/></startEvent>
+<subProcess id="b3_N12" name="Corrigir e explicar as respostas"><incoming>SF10</incoming><outgoing>SF11</outgoing></subProcess>
+<serviceTask id="b3_N13" name="Somar pontos e guardar resultado"><incoming>SF11</incoming><outgoing>SF12</outgoing></serviceTask>
+<sendTask id="b3_N14" name="Enviar resultado"><incoming>SF12</incoming><outgoing>SF13</outgoing></sendTask>
+<endEvent id="b3_N15" name="Resultado enviado"><incoming>SF13</incoming></endEvent>
+<startEvent id="b3_N16" name="Recompensa escolhida"><outgoing>SF14</outgoing><messageEventDefinition/></startEvent>
+<sendTask id="b3_N17" name="Descontar pontos e enviar código"><incoming>SF14</incoming><outgoing>SF15</outgoing></sendTask>
+<endEvent id="b3_N18" name="Recompensa entregue"><incoming>SF15</incoming></endEvent>
+<sequenceFlow id="b3_SF10" name="" sourceRef="b3_N11" targetRef="b3_N12"/>
+<sequenceFlow id="b3_SF11" name="" sourceRef="b3_N12" targetRef="b3_N13"/>
+<sequenceFlow id="b3_SF12" name="" sourceRef="b3_N13" targetRef="b3_N14"/>
+<sequenceFlow id="b3_SF13" name="" sourceRef="b3_N14" targetRef="b3_N15"/>
+<sequenceFlow id="b3_SF14" name="" sourceRef="b3_N16" targetRef="b3_N17"/>
+<sequenceFlow id="b3_SF15" name="" sourceRef="b3_N17" targetRef="b3_N18"/>
+</process>
+<bpmndi:BPMNDiagram id="b3_Diagram_1" name="BPMN - Quiz e pontos"><bpmndi:BPMNPlane id="b3_Plane_1" bpmnElement="b3_Collab_1">
+<bpmndi:BPMNShape id="b3_P1_di" bpmnElement="b3_P1" isHorizontal="true"><dc:Bounds x="15" y="15" width="1360" height="235"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_P2_di" bpmnElement="b3_P2" isHorizontal="true"><dc:Bounds x="15" y="290" width="1360" height="260"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N1_di" bpmnElement="b3_N1"><dc:Bounds x="86" y="106" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N2_di" bpmnElement="b3_N2"><dc:Bounds x="152.0" y="91.0" width="126" height="68"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N3_di" bpmnElement="b3_N3" isExpanded="false"><dc:Bounds x="312.0" y="83.0" width="126" height="84"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N4_di" bpmnElement="b3_N4"><dc:Bounds x="661" y="106" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N5_di" bpmnElement="b3_N5"><dc:Bounds x="737.0" y="91.0" width="126" height="68"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N6_di" bpmnElement="b3_N6"><dc:Bounds x="908" y="98" width="54" height="54"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N7_di" bpmnElement="b3_N7"><dc:Bounds x="1002.0" y="91.0" width="126" height="68"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N8_di" bpmnElement="b3_N8"><dc:Bounds x="1171" y="106" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N9_di" bpmnElement="b3_N9"><dc:Bounds x="1301" y="106" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N10_di" bpmnElement="b3_N10"><dc:Bounds x="916" y="186" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N11_di" bpmnElement="b3_N11"><dc:Bounds x="196" y="396" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N12_di" bpmnElement="b3_N12" isExpanded="false"><dc:Bounds x="307.0" y="373.0" width="136" height="84"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N13_di" bpmnElement="b3_N13"><dc:Bounds x="462.0" y="381.0" width="136" height="68"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N14_di" bpmnElement="b3_N14"><dc:Bounds x="617.0" y="381.0" width="126" height="68"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N15_di" bpmnElement="b3_N15"><dc:Bounds x="781" y="396" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N16_di" bpmnElement="b3_N16"><dc:Bounds x="1046" y="396" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N17_di" bpmnElement="b3_N17"><dc:Bounds x="1122.0" y="381.0" width="136" height="68"/></bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="b3_N18_di" bpmnElement="b3_N18"><dc:Bounds x="1301" y="396" width="38" height="38"/></bpmndi:BPMNShape>
+<bpmndi:BPMNEdge id="b3_SF1_di" bpmnElement="b3_SF1"><di:waypoint x="124" y="125"/><di:waypoint x="152" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF2_di" bpmnElement="b3_SF2"><di:waypoint x="278" y="125"/><di:waypoint x="312" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF3_di" bpmnElement="b3_SF3"><di:waypoint x="438" y="125"/><di:waypoint x="661" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF4_di" bpmnElement="b3_SF4"><di:waypoint x="699" y="125"/><di:waypoint x="737" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF5_di" bpmnElement="b3_SF5"><di:waypoint x="863" y="125"/><di:waypoint x="908" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF6_di" bpmnElement="b3_SF6"><di:waypoint x="962" y="125"/><di:waypoint x="1002" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF7_di" bpmnElement="b3_SF7"><di:waypoint x="1128" y="125"/><di:waypoint x="1171" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF8_di" bpmnElement="b3_SF8"><di:waypoint x="1209" y="125"/><di:waypoint x="1301" y="125"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF9_di" bpmnElement="b3_SF9"><di:waypoint x="935" y="152"/><di:waypoint x="935" y="186"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF10_di" bpmnElement="b3_SF10"><di:waypoint x="234" y="415"/><di:waypoint x="307" y="415"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF11_di" bpmnElement="b3_SF11"><di:waypoint x="443" y="415"/><di:waypoint x="462" y="415"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF12_di" bpmnElement="b3_SF12"><di:waypoint x="598" y="415"/><di:waypoint x="617" y="415"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF13_di" bpmnElement="b3_SF13"><di:waypoint x="743" y="415"/><di:waypoint x="781" y="415"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF14_di" bpmnElement="b3_SF14"><di:waypoint x="1084" y="415"/><di:waypoint x="1122" y="415"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_SF15_di" bpmnElement="b3_SF15"><di:waypoint x="1258" y="415"/><di:waypoint x="1301" y="415"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_MF1_di" bpmnElement="b3_MF1"><di:waypoint x="215" y="159"/><di:waypoint x="215" y="396"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_MF2_di" bpmnElement="b3_MF2"><di:waypoint x="350" y="159"/><di:waypoint x="350" y="381"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_MF3_di" bpmnElement="b3_MF3"><di:waypoint x="400" y="381"/><di:waypoint x="400" y="159"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_MF4_di" bpmnElement="b3_MF4"><di:waypoint x="680" y="381"/><di:waypoint x="680" y="144"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_MF5_di" bpmnElement="b3_MF5"><di:waypoint x="1065" y="159"/><di:waypoint x="1065" y="396"/></bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="b3_MF6_di" bpmnElement="b3_MF6"><di:waypoint x="1190" y="381"/><di:waypoint x="1190" y="144"/></bpmndi:BPMNEdge>
+</bpmndi:BPMNPlane></bpmndi:BPMNDiagram></definitions>
